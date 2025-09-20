@@ -1,3 +1,4 @@
+@if (forecasts.length > 0) {
 <table style="width:100%">
     <thead>
         <tr>
@@ -7,10 +8,17 @@
             <th>Summary</th>
         </tr>
     </thead>
-  <tr>
-    <td>09-19-2025</td>
-    <td>100</td>
-    <td>87</td>
-    <td>Cloudy</td>
-  </tr>
+    <tbody>
+        @for (weather of forecasts; track $index) {
+        <tr>
+            <td>{{weather.date}}</td>
+            <td>{{weather.temperatureC}}</td>
+            <td>{{weather.temperatureF}}</td>
+            <td>{{weather.summary}}</td>
+        </tr>
+        }
+    </tbody>
 </table>
+}@else{
+<p>I think my mom loves me :)</p>
+}

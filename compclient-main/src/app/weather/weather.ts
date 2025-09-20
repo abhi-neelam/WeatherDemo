@@ -3,14 +3,17 @@ import { Component } from '@angular/core';
 import { WeatherData } from '../weather-data';
 
 @Component({
-  selector: 'app-weather',
-  imports: [],
-  templateUrl: './weather.html',
-  styleUrl: './weather.scss'
+    selector: 'app-weather',
+    imports: [],
+    templateUrl: './weather.html',
+    styleUrl: './weather.scss'
 })
 export class Weather {
-  constructor(http:HttpClient) {
-    http.get<WeatherData[]>('http://localhost:5000/WeatherForecast').subscribe(result => {
-  });
- }
+    forecasts: WeatherData[] = [];
+
+    constructor(http: HttpClient) {
+        http.get<WeatherData[]>('http://localhost:5000/WeatherForecast').subscribe(result => {
+            this.forecasts = result;
+        });
+    }
 }
