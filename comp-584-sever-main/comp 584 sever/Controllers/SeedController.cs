@@ -47,8 +47,38 @@ namespace comp_584_sever.Controllers
         [HttpPost("Cities")]
         public async Task<ActionResult> PostCities()
         {
+            Dictionary<string, Country> countries = await context.Countries.AsNoTracking().
+                ToDictionaryAsync(c => c.Name, StringComparer.OrdinalIgnoreCase);
+            CsvConfiguration config = new(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = true,
+                HeaderValidated = null
+            };
+
+            using StreamReader reader = new(_pathName);
+            using CsvReader csv = new(reader, config);
+            List<DatabasedCSV> records = csv.GetRecords<DatabasedCSV>().ToList();
+
+            int cityCount = 0;
+            foreach (DatabasedCSV record in records)
+            {
+                if (record.population.HasValue)
+                {
+                    City city = new()
+                    {
+                        Name = record.city_ascii,
+                        Lat = (int)record.lat,
+                        Long = (int)record.lng,
+                        Population = (int)record.population.Value,
+                        Countryid = countries[record.country].Id
+                    };
+                    cityCount++;
+                    await context.Cities.AddAsync(city);
+                }
+            }
+
             await context.SaveChangesAsync();
-            return Ok();
+            return new JsonResult(cityCount);
         }
     }
 }
