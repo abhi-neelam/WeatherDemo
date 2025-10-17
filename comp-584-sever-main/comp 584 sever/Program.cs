@@ -13,12 +13,7 @@ builder.Services.AddDbContext<DatabasedContext>(options => {
 });
 
 builder.Services.AddCors();
-
 builder.Services.AddOpenApi();
-
-builder.Services.AddSwaggerGen(options => { 
-    
-});
 
 var app = builder.Build();
 
@@ -30,9 +25,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
 app.UseCors(options => { options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
