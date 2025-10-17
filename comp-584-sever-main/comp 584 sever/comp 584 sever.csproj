@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>comp_584_sever</RootNamespace>
+    <UserSecretsId>6fe9d481-22b8-419c-ab14-4db982b72cfc</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -26,9 +26,9 @@ public partial class DatabasedContext : DbContext
         IConfigurationBuilder builder = new ConfigurationBuilder();
         builder = builder.AddJsonFile("appsettings.json");
         builder = builder.AddJsonFile("appsettings.Development.json", true);
+        builder = builder.AddUserSecrets<DatabasedContext>(optional: true);
         IConfigurationRoot configuration = builder.Build();
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

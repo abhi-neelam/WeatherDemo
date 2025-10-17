@@ -67,8 +67,8 @@ namespace comp_584_sever.Controllers
                     City city = new()
                     {
                         Name = record.city_ascii,
-                        Lat = (int)record.lat,
-                        Long = (int)record.lng,
+                        Lat = (decimal)record.lat,
+                        Long = (decimal)record.lng,
                         Population = (int)record.population.Value,
                         Countryid = countries[record.country].Id
                     };

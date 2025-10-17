@@ -17,19 +17,18 @@ public partial class City
     public int Countryid { get; set; }
 
     [Column("name")]
-    [StringLength(10)]
+    [StringLength(100)]
     public string Name { get; set; } = null!;
 
     [Column("lat")]
-    public int Lat { get; set; }
+    public decimal Lat { get; set; }
 
     [Column("long")]
-    public int Long { get; set; }
+    public decimal Long { get; set; }
 
     [Column("population")]
     public int Population { get; set; }
 
     [ForeignKey("Countryid")]
-    [InverseProperty("Cities")]
     public virtual Country Country { get; set; } = null!;
 }

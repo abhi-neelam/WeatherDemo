@@ -14,7 +14,7 @@ public partial class Country
     public int Id { get; set; }
 
     [Column("name")]
-    [StringLength(50)]
+    [StringLength(100)]
     [Unicode(false)]
     public string Name { get; set; } = null!;
 
@@ -28,6 +28,5 @@ public partial class Country
     [Unicode(false)]
     public string Iso3 { get; set; } = null!;
 
-    [InverseProperty("Country")]
     public virtual ICollection<City> Cities { get; set; } = new List<City>();
 }

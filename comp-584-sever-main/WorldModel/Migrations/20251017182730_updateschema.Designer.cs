@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldModel;
 
@@ -10,9 +11,11 @@ using WorldModel;
 namespace WorldModel.Migrations
 {
     [DbContext(typeof(DatabasedContext))]
-    partial class DatabasedContextModelSnapshot : ModelSnapshot
+    [Migration("20251017182730_updateschema")]
+    partial class updateschema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,8 +47,8 @@ namespace WorldModel.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nchar(100)")
+                        .HasMaxLength(10)
+                        .HasColumnType("nchar(10)")
                         .HasColumnName("name")
                         .IsFixedLength();
 
@@ -87,9 +90,9 @@ namespace WorldModel.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
+                        .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
+                        .HasColumnType("varchar(50)")
                         .HasColumnName("name");
 
                     b.HasKey("Id");
