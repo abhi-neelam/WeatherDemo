@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using comp_584_sever.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,34 @@ namespace comp_584_sever.Controllers
         public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
         {
             return await context.Countries.ToListAsync();
+        }
+
+        [HttpGet("population")]
+        public async Task<ActionResult<IEnumerable<CountryPopulation>>> GetCountriesPopulation()
+        {
+            return await context.Countries.
+                Select(country => new CountryPopulation
+                {
+                    Id = country.Id,
+                    Name =  country.Name,
+                    Iso2 = country.Iso2,
+                    Iso3 = country.Iso3,
+                    Population = country.Cities.Sum(city => city.Population)
+                }).
+                ToListAsync();
+        }
+
+        [HttpGet("population/{id}")]
+        public ActionResult<CountryPopulation> GetCountryPopulation(int id)
+        {
+            return context.Countries.Select(country => new CountryPopulation
+                {
+                    Id = country.Id,
+                    Name = country.Name,
+                    Iso2 = country.Iso2,
+                    Iso3 = country.Iso3,
+                    Population = country.Cities.Sum(city => city.Population)
+                }).Single(c => c.Id == id);
         }
 
         // GET: api/Countries/5
