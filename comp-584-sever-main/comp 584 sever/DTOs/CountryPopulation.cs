@@ -14,6 +14,6 @@ namespace comp_584_sever.DTOs
 
         public required string Iso3 { get; set; }
 
-        public required long Population { get; set; }
+        public required decimal Population { get; set; }
     }
 }
