@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 
 namespace WorldModel;
 
-public partial class DatabasedContext : DbContext
+public partial class DatabasedContext : IdentityDbContext<WorldModelUser>
 {
     public DatabasedContext()
     {
