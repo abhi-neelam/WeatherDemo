@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WorldModel;
 
@@ -11,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<DatabasedContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddIdentity<WorldModelUser, IdentityRole>(options => {
+    options.Password.RequireDigit = true;  
+}).AddEntityFrameworkStores<DatabasedContext>();
 
 builder.Services.AddCors();
 
@@ -32,6 +37,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(options => { options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

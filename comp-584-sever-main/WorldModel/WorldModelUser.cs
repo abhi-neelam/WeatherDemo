@@ -10,5 +10,6 @@ namespace WorldModel
 {
     public class WorldModelUser : IdentityUser
     {
+
     }
 }

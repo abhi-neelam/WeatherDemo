@@ -2,6 +2,7 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace comp_584_sever.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SeedController(DatabasedContext context, IHostEnvironment environment) : ControllerBase
+    public class SeedController(DatabasedContext context, IHostEnvironment environment, RoleManager<IdentityRole> roleManager, UserManager<WorldModelUser> userManager, IConfiguration configuration) : ControllerBase
     {
         string _pathName = Path.Combine(environment.ContentRootPath, "data/worldcities.csv");
 
@@ -21,17 +22,22 @@ namespace comp_584_sever.Controllers
         {
             Dictionary<string, Country> countries = await context.Countries.AsNoTracking().
                 ToDictionaryAsync(c => c.Name, StringComparer.OrdinalIgnoreCase);
-            CsvConfiguration config = new(CultureInfo.InvariantCulture) { 
-                HasHeaderRecord = true, HeaderValidated = null 
+            CsvConfiguration config = new(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = true,
+                HeaderValidated = null
             };
 
             using StreamReader reader = new(_pathName);
             using CsvReader csv = new(reader, config);
             List<DatabasedCSV> records = csv.GetRecords<DatabasedCSV>().ToList();
 
-            foreach (DatabasedCSV record in records) {
-                if (!countries.ContainsKey(record.country)) {
-                    Country country = new() {
+            foreach (DatabasedCSV record in records)
+            {
+                if (!countries.ContainsKey(record.country))
+                {
+                    Country country = new()
+                    {
                         Name = record.country,
                         Iso2 = record.iso2,
                         Iso3 = record.iso3
@@ -79,6 +85,49 @@ namespace comp_584_sever.Controllers
 
             await context.SaveChangesAsync();
             return new JsonResult(cityCount);
+        }
+
+        [HttpPost("Users")]
+        public async Task<ActionResult> PostUsers()
+        {
+            string administrator = "administrator";
+            string registeredUser = "registeredUser";
+
+            if (!await roleManager.RoleExistsAsync(administrator))
+            {
+                await roleManager.CreateAsync(new IdentityRole(administrator));
+            }
+
+            if (!await roleManager.RoleExistsAsync(registeredUser))
+            {
+                await roleManager.CreateAsync(new IdentityRole(registeredUser));
+            }
+
+            WorldModelUser adminUser = new()
+            {
+                UserName = "admin",
+                Email = "aneelam@yahoo.com",
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            await userManager.CreateAsync(adminUser, configuration["DefaultPasswords:admin"]!);
+            await userManager.AddToRoleAsync(adminUser, administrator);
+
+            WorldModelUser regularUser = new()
+            {
+                UserName = "registereduser",
+                Email = "aneelam@yahoo.com",
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            await userManager.CreateAsync(regularUser, configuration["DefaultPasswords:user"]!);
+            await userManager.AddToRoleAsync(regularUser, registeredUser);
+
+            return Ok();
         }
     }
 }
