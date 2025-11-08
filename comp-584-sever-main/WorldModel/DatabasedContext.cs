@@ -34,6 +34,8 @@ public partial class DatabasedContext : IdentityDbContext<WorldModelUser>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<City>(entity =>
         {
             entity.Property(e => e.Name).IsFixedLength();
