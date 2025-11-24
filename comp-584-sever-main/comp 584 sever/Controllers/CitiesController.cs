@@ -13,9 +13,9 @@ namespace comp_584_sever.Controllers
     [ApiController]
     public class CitiesController : ControllerBase
     {
-        private readonly DatabasedContext _context;
+        private readonly Comp584DataContext _context;
 
-        public CitiesController(DatabasedContext context)
+        public CitiesController(Comp584DataContext context)
         {
             _context = context;
         }

@@ -1,6 +1,6 @@
-﻿namespace comp_584_sever.data
+﻿namespace comp_584_sever.Data
 {
-    public class DatabasedCSV
+    public class comp854Data
     {
         public required string city { get; set; }
         public required string city_ascii { get; set; }
@@ -13,5 +13,7 @@
         public required string capital { get; set; }
         public decimal? population { get; set; }
         public long id { get; set; }
+
+
     }
 }

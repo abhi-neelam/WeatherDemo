@@ -6,15 +6,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WorldModel;
 
-[Table("country")]
+[Table("Country")]
 public partial class Country
 {
     [Key]
-    [Column("id")]
+    [Column("ID")]
     public int Id { get; set; }
 
     [Column("name")]
-    [StringLength(100)]
+    [StringLength(50)]
     [Unicode(false)]
     public string Name { get; set; } = null!;
 
@@ -28,5 +28,6 @@ public partial class Country
     [Unicode(false)]
     public string Iso3 { get; set; } = null!;
 
+    [InverseProperty("Country")]
     public virtual ICollection<City> Cities { get; set; } = new List<City>();
 }

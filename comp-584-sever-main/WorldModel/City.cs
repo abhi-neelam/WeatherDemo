@@ -6,29 +6,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WorldModel;
 
-[Table("city")]
+[Table("City")]
 public partial class City
 {
     [Key]
     [Column("id")]
     public int Id { get; set; }
 
-    [Column("countryid")]
-    public int Countryid { get; set; }
+    [Column("CountryID")]
+    public int CountryId { get; set; }
 
     [Column("name")]
     [StringLength(100)]
     public string Name { get; set; } = null!;
 
     [Column("lat")]
-    public decimal Lat { get; set; }
+    public int Lat { get; set; }
 
-    [Column("long")]
-    public decimal Long { get; set; }
+    [Column("lng")]
+    public int Lng { get; set; }
 
     [Column("population")]
-    public int Population { get; set; }
+    public long Population { get; set; }
 
-    [ForeignKey("Countryid")]
+    [ForeignKey("CountryId")]
+    [InverseProperty("Cities")]
     public virtual Country Country { get; set; } = null!;
 }

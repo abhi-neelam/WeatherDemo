@@ -11,8 +11,8 @@ using WorldModel;
 namespace WorldModel.Migrations
 {
     [DbContext(typeof(Comp584DataContext))]
-    [Migration("20250927005455_initial")]
-    partial class initial
+    [Migration("20251024215906_bugfix")]
+    partial class bugfix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,13 +47,12 @@ namespace WorldModel.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nchar(10)")
-                        .HasColumnName("name")
-                        .IsFixedLength();
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("name");
 
-                    b.Property<int>("Population")
-                        .HasColumnType("int")
+                    b.Property<long>("Population")
+                        .HasColumnType("bigint")
                         .HasColumnName("population");
 
                     b.HasKey("Id");

@@ -10,9 +10,9 @@ using WorldModel;
 
 namespace WorldModel.Migrations
 {
-    [DbContext(typeof(DatabasedContext))]
-    [Migration("20251017182730_updateschema")]
-    partial class updateschema
+    [DbContext(typeof(Comp584DataContext))]
+    [Migration("20251011005657_newlen")]
+    partial class newlen
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,24 +33,23 @@ namespace WorldModel.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Countryid")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int")
-                        .HasColumnName("countryid");
+                        .HasColumnName("CountryID");
 
-                    b.Property<decimal>("Lat")
-                        .HasColumnType("decimal(18,2)")
+                    b.Property<int>("Lat")
+                        .HasColumnType("int")
                         .HasColumnName("lat");
 
-                    b.Property<decimal>("Long")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("long");
+                    b.Property<int>("Lng")
+                        .HasColumnType("int")
+                        .HasColumnName("lng");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nchar(10)")
-                        .HasColumnName("name")
-                        .IsFixedLength();
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("name");
 
                     b.Property<int>("Population")
                         .HasColumnType("int")
@@ -58,9 +57,9 @@ namespace WorldModel.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Countryid");
+                    b.HasIndex("CountryId");
 
-                    b.ToTable("city");
+                    b.ToTable("City");
                 });
 
             modelBuilder.Entity("WorldModel.Country", b =>
@@ -68,7 +67,7 @@ namespace WorldModel.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -97,16 +96,16 @@ namespace WorldModel.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("country");
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("WorldModel.City", b =>
                 {
                     b.HasOne("WorldModel.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("Countryid")
+                        .HasForeignKey("CountryId")
                         .IsRequired()
-                        .HasConstraintName("FK_city_country");
+                        .HasConstraintName("FK_City_Country");
 
                     b.Navigation("Country");
                 });

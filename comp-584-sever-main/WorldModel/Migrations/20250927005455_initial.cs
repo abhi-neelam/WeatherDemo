@@ -11,10 +11,10 @@ namespace WorldModel.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "country",
+                name: "Country",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     iso2 = table.Column<string>(type: "char(2)", unicode: false, fixedLength: true, maxLength: 2, nullable: false),
@@ -22,45 +22,45 @@ namespace WorldModel.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_country", x => x.id);
+                    table.PrimaryKey("PK_Country", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "city",
+                name: "City",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    countryid = table.Column<int>(type: "int", nullable: false),
+                    CountryID = table.Column<int>(type: "int", nullable: false),
                     name = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: false),
                     lat = table.Column<int>(type: "int", nullable: false),
-                    @long = table.Column<int>(name: "long", type: "int", nullable: false),
+                    lng = table.Column<int>(type: "int", nullable: false),
                     population = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_city", x => x.id);
+                    table.PrimaryKey("PK_City", x => x.id);
                     table.ForeignKey(
-                        name: "FK_city_country",
-                        column: x => x.countryid,
-                        principalTable: "country",
-                        principalColumn: "id");
+                        name: "FK_City_Country",
+                        column: x => x.CountryID,
+                        principalTable: "Country",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_city_countryid",
-                table: "city",
-                column: "countryid");
+                name: "IX_City_CountryID",
+                table: "City",
+                column: "CountryID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "city");
+                name: "City");
 
             migrationBuilder.DropTable(
-                name: "country");
+                name: "Country");
         }
     }
 }

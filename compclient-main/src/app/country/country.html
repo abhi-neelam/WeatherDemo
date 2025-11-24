@@ -1,20 +1,22 @@
-<h1>Country</h1>
+<h1>Countries</h1>
 <table class="table table-striped">
-    <thead>
-        <td>Id</td>
-        <td>Name</td>
-        <td>Iso2</td>
-        <td>Iso3</td>
-    </thead>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>ISO2</th>
+      <th>ISO3</th>
 
-    <tbody>
-        @for (country of (countries$ | async); track $index) {
-        <tr>
-            <td><a [routerLink]="['/country-population',country.id]">{{ country.id }}</a></td>
-            <td>{{ country.name }}</td>
-            <td>{{ country.iso2 }}</td>
-            <td>{{ country.iso3 }}</td>
-        </tr>
-        }
-    </tbody>
-</table>
+    </tr>
+  </thead>
+  <tbody>
+     @for (w of (countries$ | async); track w) {
+    <tr>
+      <td><a [routerLink]="['/country-population',w.id]">{{w.id}}</a></td>
+      <td>{{ w.name }}</td>
+      <td>{{ w.iso2 }}</td>
+      <td>{{ w.iso3 }}</td>
+ 
+    </tr>
+    }
+  </tbody>

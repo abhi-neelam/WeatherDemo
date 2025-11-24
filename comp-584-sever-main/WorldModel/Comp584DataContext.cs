@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 
 namespace WorldModel;
 
-public partial class DatabasedContext : IdentityDbContext<WorldModelUser>
+public partial class Comp584DataContext : IdentityDbContext<WorldModelUser>
 {
-    public DatabasedContext()
+    public Comp584DataContext()
     {
     }
 
-    public DatabasedContext(DbContextOptions<DatabasedContext> options)
+    public Comp584DataContext(DbContextOptions<Comp584DataContext> options)
         : base(options)
     {
     }
@@ -27,7 +26,7 @@ public partial class DatabasedContext : IdentityDbContext<WorldModelUser>
         IConfigurationBuilder builder = new ConfigurationBuilder();
         builder = builder.AddJsonFile("appsettings.json");
         builder = builder.AddJsonFile("appsettings.Development.json", true);
-        builder = builder.AddUserSecrets<DatabasedContext>(optional: true);
+        builder = builder.AddUserSecrets<Comp584DataContext>(optional: true);
         IConfigurationRoot configuration = builder.Build();
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
     }
@@ -35,14 +34,12 @@ public partial class DatabasedContext : IdentityDbContext<WorldModelUser>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
         modelBuilder.Entity<City>(entity =>
         {
-            entity.Property(e => e.Name).IsFixedLength();
 
             entity.HasOne(d => d.Country).WithMany(p => p.Cities)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_city_country");
+                .HasConstraintName("FK_City_Country");
         });
 
         modelBuilder.Entity<Country>(entity =>
