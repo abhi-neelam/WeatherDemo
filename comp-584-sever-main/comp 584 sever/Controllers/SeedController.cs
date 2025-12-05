@@ -107,7 +107,7 @@ namespace comp_584_sever.Controllers
             WorldModelUser adminUser = new()
             {
                 UserName = "admin",
-                Email = "a@gmail.com",
+                Email = "admin@gmail.com",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString()
@@ -119,7 +119,7 @@ namespace comp_584_sever.Controllers
             WorldModelUser registerUser = new()
             {
                 UserName = "user",
-                Email = "a@gmail.com",
+                Email = "user@gmail.com",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString()
